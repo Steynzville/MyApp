@@ -1,33 +1,10 @@
-import React, { useState, useEffect } from "react";
+
+
+import {useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { useSettings } from "../context/SettingsContext";
 import { useUnits } from "../context/UnitContext";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Card, CardHeader, CardContent } from "./ui/card";
-import {
-  ArrowLeft,
-  Power,
-  Droplets,
-  Thermometer,
-  Gauge,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  MapPin,
-  Calendar,
-  Wrench,
-  TrendingUp,
-  TrendingDown,
-  Minus,
-  BatteryCharging,
-  ThermometerSnowflake,
-  ThermometerSun,
-  Zap,
-  Cloud,
-  Edit2,
-  Check,
-  X,
-} from "lucide-react";
-import VitalSignGraph from "./VitalSignGraph";
 
 const UserUnitDetails = ({ className }) => {
   const { formatTemperature } = useSettings();
