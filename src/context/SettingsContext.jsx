@@ -13,6 +13,7 @@ export const useSettings = () => {
 export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState({
     soundEnabled: true,
+    volume: 35, // Volume level 0-100, default matches current hardcoded value (0.35 * 100)
     temperatureUnit: "celsius", // 'celsius' or 'fahrenheit'
   });
 
@@ -43,6 +44,41 @@ export const SettingsProvider = ({ children }) => {
 
   const toggleSound = () => {
     updateSetting("soundEnabled", !settings.soundEnabled);
+  };
+
+  const setVolume = (volume) => {
+    updateSetting("volume", volume);
+    // If setting volume to 0, also set soundEnabled to false for visual consistency
+    if (volume === 0 && settings.soundEnabled) {
+      updateSetting("soundEnabled", false);
+    }
+    // If setting volume > 0 and sound was disabled, enable it
+    else if (volume > 0 && !settings.soundEnabled) {
+      updateSetting("soundEnabled", true);
+    }
+  };
+
+  const toggleMute = () => {
+    if (settings.soundEnabled) {
+      // Store current volume and mute
+      updateSetting("soundEnabled", false);
+    } else {
+      // Unmute - restore sound and ensure volume is not 0
+      updateSetting("soundEnabled", true);
+      if (settings.volume === 0) {
+        updateSetting("volume", 35); // Default volume
+      }
+    }
+  };
+
+  // Get the effective volume (0 if muted, otherwise the set volume)
+  const getEffectiveVolume = () => {
+    return settings.soundEnabled ? settings.volume : 0;
+  };
+
+  // Normalize volume for audio API (0-100 to 0.0-1.0)
+  const getNormalizedVolume = () => {
+    return getEffectiveVolume() / 100;
   };
 
   const toggleTemperatureUnit = () => {
@@ -77,6 +113,10 @@ export const SettingsProvider = ({ children }) => {
     settings,
     updateSetting,
     toggleSound,
+    setVolume,
+    toggleMute,
+    getEffectiveVolume,
+    getNormalizedVolume,
     toggleTemperatureUnit,
     setTemperatureUnit,
     convertTemperature,

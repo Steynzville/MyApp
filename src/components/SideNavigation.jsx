@@ -29,7 +29,7 @@ import { units as mockUnits } from "../data/mockUnits";
 const EnhancedSideNavigation = () => {
   const { isCollapsed, setIsCollapsed } = useSidebar();
   const { userRole, logout } = useAuth();
-  const { settings } = useSettings();
+  const { settings, getNormalizedVolume } = useSettings();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -152,7 +152,7 @@ const EnhancedSideNavigation = () => {
   };
 
   const handleLogout = async () => {
-    playSound("logout-sound.mp3", settings.soundEnabled);
+    playSound("logout-sound.mp3", settings.soundEnabled, getNormalizedVolume());
     await logout();
     navigate("/login");
   };
