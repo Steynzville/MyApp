@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
+
 import {
+  getUnitAlerts,
   getUnitById,
   getUnitDetails,
-  getUnitAlerts,
 } from "../services/unitService";
 
 // Manage Remotely Component

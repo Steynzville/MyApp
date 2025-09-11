@@ -1,6 +1,3 @@
-import React from "react";
-import { Card, CardHeader, CardContent } from "../ui/card";
-import { Volume2 } from "lucide-react";
 import { useSettings } from "../../context/SettingsContext";
 
 const AudioSettings = () => {
