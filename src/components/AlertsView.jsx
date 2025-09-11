@@ -99,11 +99,11 @@ const AlertsView = ({ className, userRole }) => {
           },
         };
 
-        if (userRole === "admin") {
-          navigate(`/unit-details/${parseInt(unitMatch[1])}`, { state: { unit: unitWithAlert } });
-        } else {
-          navigate(`/unit/${parseInt(unitMatch[1])}`, { state: { unit: unitWithAlert } });
-        }
+        const numericId = parseInt(unitMatch[1], 10);
+        const base = userRole === "user" ? "/unit" : "/unit-details";
+        const path = `${base}/${numericId}?tab=alerts`;
+
+        navigate(path, { state: { unit: unitWithAlert, initialTab: "alerts" } });
       }
     }
   };
@@ -249,7 +249,7 @@ const AlertsView = ({ className, userRole }) => {
             <select
               value={alertFilter}
               onChange={(e) => setAlertFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">All Alerts</option>
               <option value="critical">Critical</option>
