@@ -13,8 +13,9 @@ const audioBuffers = new Map();
  * @param {string} fileName The name of the audio file (e.g., "login-sound.mp3").
  *                          The file is expected to be in the `/audio/` directory.
  * @param {boolean} soundEnabled Whether sound is enabled (defaults to true for backward compatibility).
+ * @param {number} volume The volume level from 0.0 to 1.0 (defaults to 0.35 for backward compatibility).
  */
-const playSound = async (fileName, soundEnabled = true) => {
+const playSound = async (fileName, soundEnabled = true, volume = 0.35) => {
   // Don't play sound if it's disabled
   if (!soundEnabled) {
     return;
@@ -65,7 +66,7 @@ const playSound = async (fileName, soundEnabled = true) => {
 
     // Connect the source to the destination (the user's speakers).
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = 0.35; // Reduce volume by 50% (from 0.7 to 0.35)
+    gainNode.gain.value = volume; // Use the provided volume level
     source.connect(gainNode);
     gainNode.connect(audioContext.destination);
 
