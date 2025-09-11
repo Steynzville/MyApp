@@ -1,6 +1,3 @@
-import React from "react";
-import { Card, CardContent } from "../ui/card";
-import { AlertTriangle, CheckCircle, Clock } from "lucide-react";
 
 const UnitAlertsTab = ({ unit, alertsHistory, getAlertTypeColor }) => {
   return (

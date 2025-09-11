@@ -1,30 +1,11 @@
-import React, { useState } from "react";
+
+
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Card, CardHeader, CardContent } from "./ui/card";
-import { Switch } from "./ui/switch";
-import {
-  ArrowLeft,
-  Power,
-  Droplets,
-  Settings,
-  AlertTriangle,
-  CheckCircle,
-  Zap,
-  WifiOff,
-  Wifi,
-} from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "./ui/alert-dialog";
+
 import playSound from "../utils/audioPlayer";
+
+
 
 const RemoteControl = ({ className, unit: propUnit, details }) => {
   const navigate = useNavigate();
