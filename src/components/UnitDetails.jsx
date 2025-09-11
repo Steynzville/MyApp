@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
@@ -17,7 +17,24 @@ const UnitDetails = ({ className }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const unit = location.state?.unit;
-  const [activeTab, setActiveTab] = useState("overview");
+
+  const getInitialTab = () => {
+    return (
+      location.state?.initialTab ||
+      new URLSearchParams(location.search).get("tab") ||
+      "overview"
+    );
+  };
+
+  const [activeTab, setActiveTab] = useState(getInitialTab);
+
+  useEffect(() => {
+    const nextTab =
+      location.state?.initialTab ||
+      new URLSearchParams(location.search).get("tab") ||
+      "overview";
+    setActiveTab(nextTab);
+  }, [location.search, location.state]);
 
   // Extend unit data with mock battery life and tank capacity
   if (unit) {
