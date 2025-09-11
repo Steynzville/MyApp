@@ -34,7 +34,7 @@ const ScrollToTop = () => {
 const AppContent = () => {
   const { isAuthenticated, userRole, isLoading, isLoggingOut, user } =
     useAuth();
-  const { settings } = useSettings();
+  const { settings, normalizeVolume } = useSettings();
   const isInitialMount = useRef(true);
   const [loginError, setLoginError] = useState("");
   const [appError, setAppError] = useState(null);
@@ -70,15 +70,15 @@ const AppContent = () => {
     }
 
     // Play sound only if enabled and user exists
-    if (user && settings.soundEnabled) {
+    if (user && settings.soundEnabled && settings.volume > 0) {
       try {
-        playSound("login-sound.mp3", settings.soundEnabled);
+        playSound("login-sound.mp3", settings.soundEnabled, normalizeVolume(settings.volume));
       } catch (error) {
         console.warn("Could not play login sound:", error);
         // Don't set app error for sound issues
       }
     }
-  }, [user, settings.soundEnabled]);
+  }, [user, settings.soundEnabled, settings.volume, normalizeVolume]);
 
   // Show error state if there's an application error
   if (appError) {
