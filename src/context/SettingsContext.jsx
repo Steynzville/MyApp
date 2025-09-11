@@ -13,6 +13,8 @@ export const useSettings = () => {
 export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState({
     soundEnabled: true,
+    volume: 70, // Volume level 0-100 (default 70%)
+    prevVolume: 70, // Previous volume before muting
     temperatureUnit: "celsius", // 'celsius' or 'fahrenheit'
   });
 
@@ -42,7 +44,46 @@ export const SettingsProvider = ({ children }) => {
   };
 
   const toggleSound = () => {
-    updateSetting("soundEnabled", !settings.soundEnabled);
+    if (settings.soundEnabled) {
+      // Muting: store current volume and set to 0
+      setSettings((prev) => ({
+        ...prev,
+        prevVolume: prev.volume,
+        volume: 0,
+        soundEnabled: false,
+      }));
+    } else {
+      // Unmuting: restore previous volume
+      setSettings((prev) => ({
+        ...prev,
+        volume: prev.prevVolume,
+        soundEnabled: true,
+      }));
+    }
+  };
+
+  const setVolume = (volume) => {
+    const newVolume = Math.max(0, Math.min(100, volume)); // Clamp 0-100
+    
+    setSettings((prev) => {
+      const updates = { volume: newVolume };
+      
+      // Update mute state based on volume
+      if (newVolume === 0 && prev.soundEnabled) {
+        // Volume set to 0, but don't change mute state unless explicitly muted
+        // Keep soundEnabled as is, just visually show muted
+      } else if (newVolume > 0 && !prev.soundEnabled) {
+        // Volume above 0, ensure we're not muted
+        updates.soundEnabled = true;
+      }
+      
+      return { ...prev, ...updates };
+    });
+  };
+
+  const normalizeVolume = (volume) => {
+    // Convert 0-100 to 0.0-1.0 for Web Audio API
+    return Math.max(0, Math.min(1, volume / 100));
   };
 
   const toggleTemperatureUnit = () => {
@@ -77,6 +118,8 @@ export const SettingsProvider = ({ children }) => {
     settings,
     updateSetting,
     toggleSound,
+    setVolume,
+    normalizeVolume,
     toggleTemperatureUnit,
     setTemperatureUnit,
     convertTemperature,
