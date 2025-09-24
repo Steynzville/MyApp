@@ -1,10 +1,23 @@
 import { useCallback,useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Fingerprint, Volume2, VolumeX } from "lucide-react";
 
 import appleLogoBlack from "../assets/apple-logo-black.svg";
 import appleLogoWhite from "../assets/apple-logo-white.svg";
 import googleLogo from "../assets/google-logo.svg";
 import thermaCoreLogo from "../assets/thermacore-logo-new.png";
+import SocialButton from "./SocialButton";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { useAuth } from "../context/AuthContext";
 import { useSettings } from "../context/SettingsContext";
 import { useTheme } from "../context/ThemeContext";

@@ -2,11 +2,24 @@ import "./App.css";
 
 import React, { useEffect, useRef, useState } from "react";
 import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
   useLocation,
 } from "react-router-dom";
 
+import Spinner from "./components/common/Spinner";
+import LoginScreen from "./components/LoginScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ThemeToggle from "./components/ThemeToggle";
 // Removed static imports for UnitControl, UnitDetails, UserUnitDetails
 import routes from "./config/routes";
+import { AuthProvider } from "./context/AuthContext";
+import { SettingsProvider } from "./context/SettingsContext";
+import { SidebarProvider } from "./context/SidebarContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { UnitProvider } from "./context/UnitContext";
 import { useAuth } from "./context/AuthContext";
 import { useSettings } from "./context/SettingsContext";
 import playSound from "./utils/audioPlayer";
